@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App Research Tool - Indie Hacker Micro SaaS</title>
+    <script>
+      // Defensive environment Shield to ignore or gracefully swallow typical iframe sandbox override errors
+      window.addEventListener('error', function(e) {
+        if (e && e.message && (
+          e.message.includes('fetch of #<Window>') || 
+          e.message.includes('property fetch')
+        )) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          return true;
+        }
+      }, true);
+      window.addEventListener('unhandledrejection', function(e) {
+        if (e && e.reason && e.reason.message && (
+          e.reason.message.includes('fetch of #<Window>') || 
+          e.reason.message.includes('property fetch')
+        )) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          return true;
+        }
+      }, true);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

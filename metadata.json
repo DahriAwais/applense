@@ -1,0 +1,6 @@
+{
+  "name": "Applense",
+  "description": "An indie hacker and app developer micro-SaaS research tool for fetching and estimating App Store and Play Store app earnings and metric analysis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
