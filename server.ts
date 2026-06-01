@@ -622,25 +622,26 @@ function generateSimulatedAppleDetails(id: string) {
   };
 }
 
-async function startServer() {
-  const app = express();
-  const PORT = 3000;
+const app = express();
 
-  app.use(express.json());
+app.use(express.json());
 
-  // Request logger middleware
-  app.use((req, res, next) => {
-    const start = Date.now();
-    console.log(`[REQUEST] ${req.method} ${req.url}`);
-    
-    // Capture the response finish to log the final status code
-    res.on("finish", () => {
-      const duration = Date.now() - start;
-      console.log(`[RESPONSE] ${req.method} ${req.url} -> Status ${res.statusCode} (${duration}ms)`);
-    });
-    
-    next();
+// Request logger middleware
+app.use((req, res, next) => {
+  const start = Date.now();
+  console.log(`[REQUEST] ${req.method} ${req.url}`);
+  
+  // Capture the response finish to log the final status code
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    console.log(`[RESPONSE] ${req.method} ${req.url} -> Status ${res.statusCode} (${duration}ms)`);
   });
+  
+  next();
+});
+
+async function startServer() {
+  const PORT = 3000;
 
   // Search API
   app.get("/api/search", async (req, res) => {
@@ -973,4 +974,10 @@ async function startServer() {
   });
 }
 
-startServer();
+if (!process.env.VERCEL) {
+  startServer().catch((err) => {
+    console.error("Local startup failed:", err);
+  });
+}
+
+export default app;
